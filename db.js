@@ -59,7 +59,7 @@ app.get("/recent", async (req, res, next) => {
 });
 
 app.get("/query/:queryId/", async (req, res, next) => {
-  let db = new sqlite3.Database("./server/db/instances.json", (err) => {
+  let db = new sqlite3.Database("db/instances.json", (err) => {
     if (err) {
       console.error(err.message);
     }
