@@ -3,7 +3,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
 const cors = require("cors");
-const queryServices = require("../services/query");
+const queryServices = require("./services/query");
 
 app.use(bodyParser.json());
 app.use(cors());
@@ -13,7 +13,7 @@ app.get("/", (req, res) => {
   res.send([]);
 });
 
-let db = new sqlite3.Database("./server/db/instances.json", (err) => {
+let db = new sqlite3.Database("db/instances.json", (err) => {
   if (err) {
     console.error(err.message);
   }
@@ -84,5 +84,5 @@ app.get("/query/:queryId", async (req, res, next) => {
   }
 });
 
-console.log("listening on port 3000");
-app.listen(3000);
+console.log("listening on port 3001");
+app.listen(3001);
