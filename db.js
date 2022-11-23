@@ -58,6 +58,33 @@ app.get("/recent", async (req, res, next) => {
   }
 });
 
+app.post("/addQuery", async (req, res, next) => {
+  const query = req.body;
+  let db = new sqlite3.Database("./db/instances.json", (err) => {
+    if (err) {
+      console.error(err.message);
+    }
+    console.log("Connected to the db database.");
+  });
+  // Accepts query JSON object and adds it to the database
+  try {
+    db.serialize(() => {
+      db.run(
+        `INSERT INTO instances(queryId, queryContent, sightings) VALUES (?, ?, ?)`,
+        [query.queryId, query.queryContent, query.sightings],
+        (err) =>
+          err
+            ? console.log(err.message)
+            : console.log(`A row has been inserted for ${query.queryId}`)
+      );
+    });
+    db.close();
+    res.sendStatus(200);
+  } catch (e) {
+    console.log(e);
+  }
+});
+
 app.get("/query/:queryId/", async (req, res, next) => {
   let db = new sqlite3.Database("./db/instances.json", (err) => {
     if (err) {
