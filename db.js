@@ -60,6 +60,8 @@ app.get("/recent", async (req, res, next) => {
 
 app.post("/addQuery/", async (req, res, next) => {
   const query = JSON.parse(req.body);
+  console.log("Query is:");
+  console.log(query);
   let db = new sqlite3.Database("./db/instances.json", (err) => {
     if (err) {
       console.error(err.message);
